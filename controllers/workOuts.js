@@ -101,7 +101,7 @@ export const completeWorkOutStatus = async (req, res) => {
       return res.status(404).json({ message: `no workouts to update` });
     }
 
-    const workOut = await WorkOut.findOneAndUpdate({ userId, _id: workOutId }, { status: "completed" });
+    const workOut = await WorkOut.findOneAndUpdate({ userId, _id: workOutId }, { status: "completed" }, { new: true });
     if (!workOut) {
       return res.status(404).json({ message: `workout not found` });
     }
