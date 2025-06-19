@@ -20,7 +20,7 @@ import workOutRoute from "./routes/workOuts.js";
 
 // ===== ROUTE MIDDLEWARES ===== //
 app.use("/users", userRoute);
-app.use("/workOuts", workOutRoute);
+app.use("/workouts", workOutRoute);
 
 async function startServer() {
   try {
