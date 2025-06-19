@@ -105,7 +105,7 @@ export const completeWorkOutStatus = async (req, res) => {
     if (!workOut) {
       return res.status(404).json({ message: `workout not found` });
     }
-    return res.status(200).json({ message: `workout successfully completed` });
+    return res.status(200).json({ message: `workout updated successfully`, updatedWorkout: workOut });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: error.message });
