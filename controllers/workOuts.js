@@ -34,7 +34,7 @@ export const getWorkOut = async (req, res) => {
     if (WorkOuts.length == 0) {
       return res.status(404).json({ message: `no existing workout yet` });
     }
-    return res.status(200).json(WorkOuts);
+    return res.status(200).json({ workouts: WorkOuts });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: error.message });
@@ -87,6 +87,27 @@ export const deleteWorkOut = async (req, res) => {
       return res.status(404).json({ message: `workout not found` });
     }
     return res.status(200).json({ message: `workout successfully deleted` });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+export const completeWorkOutStatus = async (req, res) => {
+  try {
+    const workOutId = req.params.id;
+    const userId = req.user.id;
+
+    const userWorkOuts = await WorkOut.find({ userId });
+    if (userWorkOuts.length == 0) {
+      return res.status(404).json({ message: `no workouts to update` });
+    }
+
+    const workOut = await WorkOut.findOneAndUpdate({ userId, _id: workOutId }, { status: "completed" });
+    if (!workOut) {
+      return res.status(404).json({ message: `workout not found` });
+    }
+    return res.status(200).json({ message: `workout successfully completed` });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: error.message });
